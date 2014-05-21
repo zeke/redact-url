@@ -1,0 +1,33 @@
+{
+  "name": "redact-url",
+  "version": "0.1.0",
+  "description": "Redact or remove authentication data from URLs",
+  "main": "index.js",
+  "usage": {
+    "lang": "js",
+    "content": "require('redact-url')('https://suzy:secrets@example.com')\n// https://REDACTED@example.com"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zeke/redact-url"
+  },
+  "keywords": [
+    "secrets",
+    "auth",
+    "password",
+    "security",
+    "redact",
+    "url"
+  ],
+  "author": "Zeke Sikelianos <zeke@sikelianos.com> (http://zeke.sikelianos.com/)",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^1.19.0"
+  },
+  "dependencies": {
+    "is-url": "^1.1.0"
+  }
+}
