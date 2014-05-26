@@ -1,15 +1,28 @@
 var isURL = require("is-url")
-var url = require("url")
+var URL = require("url")
+var qs = require("querystring")
 
 var redact = module.exports = function(input, replacement) {
 
+  replacement = typeof(replacement) === "string" ? replacement : "REDACTED"
+
   if (!isURL(input)) return input
 
-  var parsedURL = url.parse(input)
+  var url = URL.parse(input)
 
-  if (parsedURL.auth) {
-    parsedURL.auth = (typeof(replacement) === "string" ? replacement : "REDACTED")
+  if (url.auth) {
+    url.auth = replacement
   }
 
-  return url.format(parsedURL)
+  if (url.query){
+    url.search = null
+    url.query = qs.parse(url.query)
+
+    Object.keys(url.query).forEach(function(key) {
+      if (key.match(/secret|pass|token|key|pwd/i)) url.query[key] = replacement
+    })
+
+  }
+
+  return URL.format(url)
 }

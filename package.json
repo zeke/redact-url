@@ -1,6 +1,6 @@
 {
   "name": "redact-url",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Redact or remove authentication data from URLs",
   "main": "index.js",
   "usage": {
