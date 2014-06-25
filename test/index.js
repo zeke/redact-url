@@ -1,3 +1,5 @@
+"use strict";
+
 var mocha = require("mocha")
 var assert = require("assert")
 var redact = require("..")
@@ -20,6 +22,11 @@ describe("redact(str)", function() {
   it("accepts an optional replacement arugment", function() {
     assert.equal(redact("https://zeke:password@github.com/zeke/outlet", ""), "https://github.com/zeke/outlet")
     assert.equal(redact("https://zeke:password@github.com/zeke/outlet", "xxx"), "https://xxx@github.com/zeke/outlet")
+  })
+
+  it("supports git+http(s) URLs", function() {
+    assert.equal(redact("git+https://zeke:password@github.com/zeke/outlet", ""), "git+https://github.com/zeke/outlet")
+    assert.equal(redact("git+http://zeke:password@github.com/zeke/outlet", "xxx"), "git+http://xxx@github.com/zeke/outlet")
   })
 
   describe("redacts query parameters with secret-sounding names", function() {
