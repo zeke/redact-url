@@ -6,7 +6,9 @@ var redact = module.exports = function(input, replacement) {
 
   replacement = typeof(replacement) === "string" ? replacement : "REDACTED"
 
-  if (!isURL(input) && !input.match(/^git\+http/)) return input
+  // Require a URL or git+protocol URL-esque string
+  // https://www.npmjs.org/doc/json.html#Git-URLs-as-Dependencies
+  if (!isURL(input) && !input.match(/^git\+(https?|ssl)/)) return input
 
   var url = URL.parse(input)
 

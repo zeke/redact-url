@@ -29,6 +29,10 @@ describe("redact(str)", function() {
     assert.equal(redact("git+http://zeke:password@github.com/zeke/outlet", "xxx"), "git+http://xxx@github.com/zeke/outlet")
   })
 
+  it("supports git+ssl URLs", function() {
+    assert.equal(redact("git+ssl://zeke:password@github.com/zeke/outlet", ""), "git+ssl://github.com/zeke/outlet")
+  })
+
   describe("redacts query parameters with secret-sounding names", function() {
 
     it("token", function() {
