@@ -1,14 +1,23 @@
 var isURL = require("is-url")
 var URL = require("url")
 var qs = require("querystring")
+var urlRegex = require("url-regex")
 
 var redact = module.exports = function(input, replacement) {
 
   replacement = typeof(replacement) === "string" ? replacement : "REDACTED"
 
+  var isUrlWithPort = function(val) {
+    if (isURL(val)) return true;
+    if (urlRegex({strict: true, exact: true}).test(val)) return true;
+    if (val.match(/^git\+(https?|ssl)/) && urlRegex({strict: true, exact: false}).test(val)) return true;
+
+    return false;
+  }
+
   // Require a URL or git+protocol URL-esque string
   // https://www.npmjs.org/doc/json.html#Git-URLs-as-Dependencies
-  if (!isURL(input) && !input.match(/^git\+(https?|ssl)/)) return input
+  if (!isUrlWithPort(input)) return input
 
   var url = URL.parse(input)
 

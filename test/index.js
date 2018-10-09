@@ -33,6 +33,14 @@ describe("redact(str)", function() {
     assert.equal(redact("git+ssl://zeke:password@github.com/zeke/outlet", ""), "git+ssl://github.com/zeke/outlet")
   })
 
+  it("supports URLs with ports", function() {
+    assert.equal(redact("http://zeke:password@github.com:1234/zeke/outlet"), "http://REDACTED@github.com:1234/zeke/outlet")
+  });
+
+  it("supports URLs unusual protocols", function() {
+    assert.equal(redact("amqp://zeke:password@github.com:1234/zeke/outlet"), "amqp://REDACTED@github.com:1234/zeke/outlet")
+  });
+
   describe("redacts query parameters with secret-sounding names", function() {
 
     it("token", function() {
